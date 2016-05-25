@@ -114,6 +114,6 @@ public class SignUpFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        public void isComplete();
+        public void isSignupComplete();
     }
 }

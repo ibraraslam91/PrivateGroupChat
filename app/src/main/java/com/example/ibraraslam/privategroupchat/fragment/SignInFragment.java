@@ -120,6 +120,6 @@ public class SignInFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
 
-        public void isComplete();
+        public void isSignInComplete();
     }
 }
