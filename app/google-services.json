@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "150732486048",
+    "firebase_url": "https://privategroupchat-a956e.firebaseio.com",
+    "project_id": "privategroupchat-a956e",
+    "storage_bucket": "privategroupchat-a956e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150732486048:android:fcca2ced6513a6df",
+        "android_client_info": {
+          "package_name": "com.example.ibraraslam.privategroupchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150732486048-rbfs7plkbnrn84eqccf3294rla9n2vnh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdWlsUaVCvz5qfoeOWkHCaORBhgBUPLKg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
