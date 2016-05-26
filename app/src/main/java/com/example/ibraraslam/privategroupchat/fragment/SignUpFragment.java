@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ibraraslam.privategroupchat.R;
+import com.example.ibraraslam.privategroupchat.constant.FirebasePath;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,7 +52,7 @@ public class SignUpFragment extends Fragment {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user!= null){
                     FirebaseDatabase rootRef = FirebaseDatabase.getInstance();
-                    DatabaseReference userDataNode = rootRef.getReference("userData");
+                    DatabaseReference userDataNode = rootRef.getReference(FirebasePath.getUserDataNode());
                     userDataNode.child(user.getUid()).setValue(name);
 
 
