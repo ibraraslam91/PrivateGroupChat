@@ -1,5 +1,6 @@
 package com.example.ibraraslam.privategroupchat.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupDataModel model = groupList.get(position);
-
+                //Intent intent = new Intent(HomeActivity.this,);
             }
         });
         getGroupsList();

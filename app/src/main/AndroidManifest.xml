@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.AddPriavteGroupActivity"></activity>
     </application>
 
 </manifest>
