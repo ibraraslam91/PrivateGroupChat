@@ -1,7 +1,11 @@
 package com.example.ibraraslam.privategroupchat.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +32,8 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<MessageModel> messageList;
     MessageListAdapter adapter;
     String userID,conKey;
+
+    final int REQUEST_FILE_SELECT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +57,36 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        GetMessagesData();
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.chat_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_attach:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
 
     }
 
+    public void getFile(){
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select file to upload"), REQUEST_FILE_SELECT);
+    }
 
     public void GetMessagesData(){
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
@@ -100,5 +130,22 @@ public class ChatActivity extends AppCompatActivity {
                 messageListView.setSelection(adapter.getCount() - 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+
+            if(requestCode == REQUEST_FILE_SELECT) {
+//                Uri uri = data.getData();
+//                FileUploadTask task = new FileUploadTask(this,conKey,userID,this);
+//                task.execute(uri,null,null);
+            }
+        }
+        else {
+            return;
+        }
+
     }
 }
