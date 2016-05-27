@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.ExpandedMenuView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,8 @@ import com.example.ibraraslam.privategroupchat.constant.FirebasePath;
 import com.example.ibraraslam.privategroupchat.model.GroupDataModel;
 import com.example.ibraraslam.privategroupchat.R;
 import com.example.ibraraslam.privategroupchat.adapter.GroupListAdapter;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         userID = getIntent().getStringExtra("userID");
+        Log.d("Log",userID);
         groupList = new ArrayList<GroupDataModel>();
         listView = (ListView) findViewById(R.id.listView);
         adapter = new GroupListAdapter(this,R.layout.group_list_item,groupList);
@@ -41,7 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         addGroupFat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(HomeActivity.this,AddPriavteGroupActivity.class);
+                intent.putExtra("userID",userID);
+                startActivity(intent);
             }
         });
 
@@ -61,6 +67,13 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
+
+
+    }
 
     public void getGroupsList(){
         FirebaseDatabase rootRef = FirebaseDatabase.getInstance();

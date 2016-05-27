@@ -1,10 +1,12 @@
 package com.example.ibraraslam.privategroupchat.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ibraraslam.privategroupchat.R;
+import com.example.ibraraslam.privategroupchat.activity.HomeActivity;
 import com.example.ibraraslam.privategroupchat.constant.FirebasePath;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +38,7 @@ public class SignUpFragment extends Fragment {
     }
 
 
-    public static SignUpFragment newInstance(String param1, String param2) {
+    public static SignUpFragment newInstance() {
         SignUpFragment fragment = new SignUpFragment();
         Bundle args = new Bundle();
 
@@ -49,12 +52,25 @@ public class SignUpFragment extends Fragment {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user!= null){
+                    Log.d("TAG Sign up","State Change");
                     FirebaseDatabase rootRef = FirebaseDatabase.getInstance();
                     DatabaseReference userDataNode = rootRef.getReference(FirebasePath.getUserDataNode());
-                    userDataNode.child(user.getUid()).setValue(name);
-
+                    Log.d("TAG Sign up",user.getUid());
+                    userDataNode.child(user.getUid()).setValue(name).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(!task.isSuccessful()){
+                                Log.d("Tag",task.getException().toString());
+                            }
+                        }
+                    });
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    intent.putExtra("userID",user.getUid());
+                    startActivity(intent);
+                    mListener.isSignupComplete();
 
                 }
             }
@@ -86,6 +102,7 @@ public class SignUpFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
                                 Toast.makeText(getContext(),task.getException().toString(),Toast.LENGTH_SHORT).show();
+                                Log.d("TAG",task.getException().toString());
                             }
                         }
                     });

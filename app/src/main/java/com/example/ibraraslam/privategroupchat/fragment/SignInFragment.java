@@ -1,10 +1,12 @@
 package com.example.ibraraslam.privategroupchat.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ibraraslam.privategroupchat.R;
+import com.example.ibraraslam.privategroupchat.activity.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -48,7 +51,11 @@ public class SignInFragment extends Fragment {
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-
+                    Log.d("TAG","State Change");
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    intent.putExtra("userID",user.getUid());
+                    startActivity(intent);
+                    mListener.isSignInComplete();
                 }
             }
         };

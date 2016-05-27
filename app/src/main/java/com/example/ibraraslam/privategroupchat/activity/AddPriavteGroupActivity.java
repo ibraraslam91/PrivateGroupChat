@@ -3,6 +3,7 @@ package com.example.ibraraslam.privategroupchat.activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +34,19 @@ public class AddPriavteGroupActivity extends AppCompatActivity {
     EditText groupName;
     Button addPrivatGroup;
     UserListAdapter adapter;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_priavte_group);
+        userID = getIntent().getStringExtra("userID");
         userList = new ArrayList<UserDataModel>();
         adapter = new UserListAdapter(this,101,userList);
         userListView = (ListView) findViewById(R.id.user_list_view);
         userListView.setAdapter(adapter);
         groupName = (EditText) findViewById(R.id.private_name_Edt);
-
+        getUsersData();
         addPrivatGroup = (Button) findViewById(R.id.add_private_group_Btn);
         addPrivatGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,16 +60,17 @@ public class AddPriavteGroupActivity extends AppCompatActivity {
                     GroupDataModel model = new GroupDataModel();
                     model.setConKey(conKey);
                     model.setName(groupName.getText().toString());
+                    privateGroupData.child(userID).push().setValue(model);
                     for(UserDataModel userData : userList){
                         if(userData.isSelected()){
-                            privateGroupData.child(userData.getUserID()).push().setValue(groupName);
+                            privateGroupData.child(userData.getUserID()).push().setValue(model);
                         }
                     }
                 }
             }
         });
 
-        getUsersData();
+
     }
 
     public void getUsersData(){
@@ -75,11 +79,14 @@ public class AddPriavteGroupActivity extends AppCompatActivity {
         userData.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                UserDataModel userDataModel = new UserDataModel();
-                userDataModel.setName((String) dataSnapshot.getValue());
-                userDataModel.setUserID(dataSnapshot.getKey());
-                userDataModel.setSelected(false);
-                userList.add(userDataModel);
+                if(!dataSnapshot.getKey().equals(userID)){
+                    UserDataModel userDataModel = new UserDataModel();
+                    userDataModel.setName((String) dataSnapshot.getValue());
+                    userDataModel.setUserID(dataSnapshot.getKey());
+                    userDataModel.setSelected(false);
+                    userList.add(userDataModel);
+                    Log.d("TAG",userDataModel.getName());
+                }
 
             }
 

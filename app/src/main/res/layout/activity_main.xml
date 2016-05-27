@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.MainActivity">
 
     <android.support.design.widget.TabLayout
@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
+        app:tabTextColor="#F8E0E6"
+        app:tabSelectedTextColor="#FFFFFF"
         android:minHeight="?attr/actionBarSize"/>
 
     <android.support.v4.view.ViewPager
