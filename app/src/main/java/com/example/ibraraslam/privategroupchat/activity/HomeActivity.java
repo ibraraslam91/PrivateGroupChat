@@ -50,7 +50,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupDataModel model = groupList.get(position);
-                //Intent intent = new Intent(HomeActivity.this,);
+                Intent intent = new Intent(HomeActivity.this,ChatActivity.class);
+                intent.putExtra("userID",userID);
+                intent.putExtra("conKey",model.getConKey());
+                startActivity(intent);
             }
         });
         getGroupsList();
