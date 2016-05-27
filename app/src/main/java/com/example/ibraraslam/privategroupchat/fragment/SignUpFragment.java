@@ -71,7 +71,6 @@ public class SignUpFragment extends Fragment {
                     intent.putExtra("userID",user.getUid());
                     startActivity(intent);
                     mListener.isSignupComplete();
-
                 }
             }
         };
@@ -103,6 +102,13 @@ public class SignUpFragment extends Fragment {
                             if(!task.isSuccessful()){
                                 Toast.makeText(getContext(),task.getException().toString(),Toast.LENGTH_SHORT).show();
                                 Log.d("TAG",task.getException().toString());
+
+                            }
+                            else {
+                                AuthResult result = task.getResult();
+                                Log.d("TAG",result.getUser().getUid());
+                                DatabaseReference userDataNode = FirebaseDatabase.getInstance().getReference(FirebasePath.getUserDataNode());
+                                userDataNode.child(result.getUser().getUid()).setValue(nameEdt.getText().toString());
                             }
                         }
                     });
