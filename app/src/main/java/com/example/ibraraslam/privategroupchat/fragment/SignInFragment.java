@@ -27,7 +27,6 @@ public class SignInFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthStateListener;
 
     public SignInFragment() {
 
@@ -45,35 +44,12 @@ public class SignInFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    Log.d("TAG","State Change");
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    intent.putExtra("userID",user.getUid());
-                    startActivity(intent);
-                    mListener.isSignInComplete();
-                }
-            }
-        };
 
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthStateListener);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mAuth.removeAuthStateListener(mAuthStateListener);
-    }
 
     View rootView;
     @Override

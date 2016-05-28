@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/message_Edt"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/send_message_Btn"
             android:layout_width="wrap_content"

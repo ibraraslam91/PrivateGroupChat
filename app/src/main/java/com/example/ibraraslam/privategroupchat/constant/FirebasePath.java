@@ -7,9 +7,14 @@ public class FirebasePath {
     public static final String userDataNode = "userData";
     public static final String privateDataNode = "privateGroupData";
     public static final String conversationNode = "conversationData";
+    public static final String storagePath = "gs://privategroupchat-a956e.appspot.com";
 
     public static String getUserDataNode() {
         return userDataNode;
+    }
+
+    public static String getStoragePath() {
+        return storagePath;
     }
 
     public static String getPrivateDataNode() {

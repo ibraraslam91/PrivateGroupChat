@@ -30,7 +30,6 @@ public class SignUpFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthStateListener;
     String name;
 
     public SignUpFragment() {
@@ -49,31 +48,7 @@ public class SignUpFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user!= null){
-                    Log.d("TAG Sign up","State Change");
-                    FirebaseDatabase rootRef = FirebaseDatabase.getInstance();
-                    DatabaseReference userDataNode = rootRef.getReference(FirebasePath.getUserDataNode());
-                    Log.d("TAG Sign up",user.getUid());
-                    userDataNode.child(user.getUid()).setValue(name).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(!task.isSuccessful()){
-                                Log.d("Tag",task.getException().toString());
-                            }
-                        }
-                    });
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    intent.putExtra("userID",user.getUid());
-                    startActivity(intent);
-                    mListener.isSignupComplete();
-                }
-            }
-        };
     }
     View rootView;
     @Override
