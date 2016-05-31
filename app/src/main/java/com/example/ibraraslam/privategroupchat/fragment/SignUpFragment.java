@@ -84,6 +84,7 @@ public class SignUpFragment extends Fragment {
                                 Log.d("TAG",result.getUser().getUid());
                                 DatabaseReference userDataNode = FirebaseDatabase.getInstance().getReference(FirebasePath.getUserDataNode());
                                 userDataNode.child(result.getUser().getUid()).setValue(nameEdt.getText().toString());
+                                mListener.isSignupComplete();
                             }
                         }
                     });

@@ -45,7 +45,7 @@ public class MessageListAdapter extends ArrayAdapter<MessageModel> {
         MessageModel messageModel = messagelist.get(position);
         if(convertView== null){
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(resource,parent,false);
+
             viewHolder = new ViewHolder();
             switch (viewType) {
                 case LEFT_MESSAGE:
@@ -74,11 +74,16 @@ public class MessageListAdapter extends ArrayAdapter<MessageModel> {
                 if (messageModel.getMessageType().equals("File")){
                     viewHolder.downloadIcon.setImageResource(R.drawable.download_icon);
                 }
+                else{
+                     viewHolder.downloadIcon.setImageDrawable(null);
+                 }
                 break;
             case RIGHT_MESSAGE:
                 viewHolder.messageText.setText(messageModel.getMessageTxt());
                 if (messageModel.getMessageType().equals("File")){
                     viewHolder.downloadIcon.setImageResource(R.drawable.download_icon);
+                }else{
+                    viewHolder.downloadIcon.setImageDrawable(null);
                 }
                 break;
         }

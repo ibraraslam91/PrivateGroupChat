@@ -85,6 +85,7 @@ public class AddPriavteGroupActivity extends AppCompatActivity {
                     userDataModel.setUserID(dataSnapshot.getKey());
                     userDataModel.setSelected(false);
                     userList.add(userDataModel);
+                    adapter.notifyDataSetChanged();
                     Log.d("TAG",userDataModel.getName());
                 }
 

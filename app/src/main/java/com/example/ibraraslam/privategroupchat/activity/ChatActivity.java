@@ -56,6 +56,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         userID = getIntent().getStringExtra("userID");
         conKey = getIntent().getStringExtra("conKey");
+        Log.d("TAG", "Chat Activity userID"+userID);
+        Log.d("TAG","Chat Activity conKey "+ conKey);
+        rootNode = FirebaseDatabase.getInstance();
         conversationNode = rootNode.getReference(FirebasePath.getConversationNode()).child(conKey);
         messageEdt = (EditText) findViewById(R.id.message_Edt);
         messageListView = (ListView) findViewById(R.id.messageList);
@@ -68,6 +71,8 @@ public class ChatActivity extends AppCompatActivity {
                     messageModel.setSenderID(userID);
                     messageModel.setMessageType("Text");
                     messageModel.setMessageTxt(messageEdt.getText().toString());
+                    //messageModel.setUrl("");
+                    sendMessage(messageModel);
                     messageEdt.setText("");
                 }
             }
@@ -80,7 +85,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MessageModel messageModel = messageList.get(position);
                 if(messageModel.getMessageType().equals("File")){
-                    DownloadManager.Request request =new DownloadManager.Request(Uri.parse(messageModel.getURl()));
+                    DownloadManager.Request request =new DownloadManager.Request(Uri.parse(messageModel.getUrl()));
                     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, messageModel.getMessageTxt());
                     request.allowScanningByMediaScanner();
                     request.setTitle("Downloading "+messageModel.getMessageTxt());
@@ -109,6 +114,7 @@ public class ChatActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menu_attach:
+                getFile();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -191,7 +197,7 @@ public class ChatActivity extends AppCompatActivity {
                         messageModel.setMessageTxt(name);
                         messageModel.setMessageType("File");
                         messageModel.setSenderID(userID);
-                        messageModel.setURl(taskSnapshot.getDownloadUrl().toString());
+                        messageModel.setUrl(taskSnapshot.getDownloadUrl().toString());
                         sendMessage(messageModel);
                     }
                 });
@@ -204,7 +210,7 @@ public class ChatActivity extends AppCompatActivity {
                 uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.d("Upload",taskSnapshot.toString());
+                        Log.d("Upload",taskSnapshot.getBytesTransferred()+"");
                     }
                 });
             }

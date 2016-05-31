@@ -73,6 +73,10 @@ public class SignInFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!task.isSuccessful()){
                                 Toast.makeText(getContext(),task.getException().toString()+"",Toast.LENGTH_SHORT).show();
+                                Log.d("TAG","Sign error " + task.getException().getMessage());
+                            }
+                            else {
+                                mListener.isSignInComplete();
                             }
                         }
                     });

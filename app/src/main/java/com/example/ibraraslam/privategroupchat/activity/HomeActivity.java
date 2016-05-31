@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         userID = getIntent().getStringExtra("userID");
-        Log.d("Log",userID);
+        Log.d("Log","Home Activity "+userID);
         groupList = new ArrayList<GroupDataModel>();
         listView = (ListView) findViewById(R.id.listView);
         adapter = new GroupListAdapter(this,R.layout.group_list_item,groupList);

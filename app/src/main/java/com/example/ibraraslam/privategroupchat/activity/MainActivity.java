@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.ibraraslam.privategroupchat.R;
 import com.example.ibraraslam.privategroupchat.adapter.PageAdapter_LogActivity;
@@ -27,11 +28,14 @@ public class MainActivity extends AppCompatActivity implements SignUpFragment.On
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.d("TAG","Auth status change");
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user!=null){
+                    Log.d("TAG","user log in " +user.getUid());
                     Intent intent = new Intent(MainActivity.this,HomeActivity.class);
                     intent.putExtra("userID",user.getUid());
                     startActivity(intent);
+                    MainActivity.this.finish();
                 }
             }
         };

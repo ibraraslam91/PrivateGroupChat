@@ -10,7 +10,7 @@ public class MessageModel {
     String messageTxt;
     String messageType;
     String senderID;
-    String URl;
+    String url;
 
     public String getMessageTxt() {
         return messageTxt;
@@ -36,11 +36,11 @@ public class MessageModel {
         this.senderID = senderID;
     }
 
-    public String getURl() {
-        return URl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURl(String URl) {
-        this.URl = URl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
